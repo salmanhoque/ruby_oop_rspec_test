@@ -14,6 +14,14 @@ class Movie
 		return movies_array
 	end
 
+	def self.add_movie(movie)
+		if Store.add_into_file(movie) 
+			return true
+		else
+			return false
+		end				
+	end
+
 	attr_accessor :movie_name, :release_date, :rating
 
 	def initialize(movie_name,release_date,rating)
@@ -22,12 +30,4 @@ class Movie
 		@rating 	   = rating		
 	end
 
-	def add_movie
-		movie = [@movie_name, @release_date, @rating]
-		if Store.add_into_file(movie) 
-			return true
-		else
-			return false
-		end				
-	end
 end

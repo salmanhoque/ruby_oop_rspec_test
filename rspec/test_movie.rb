@@ -19,12 +19,12 @@ describe "#MovieClass" do
 
 	describe "Should able to store data into file" do
 		before :each do
-			@a = Movie.new("Super Man",2013,8.5)
+			@a = [ "Super Man",2013,8.5 ]
 			Store.set_file = 'movie.txt'
 		end
 
 		context "by using add_movie method" do
-			it { @a.add_movie.should be_true }
+			it { Movie.add_movie(@a).should be_true }
 		end
 	end
 

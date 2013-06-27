@@ -1,4 +1,5 @@
 require 'store'
+require 'movie'
 
 class Interface
 
@@ -48,11 +49,13 @@ class Interface
 	end
 
 	def add_movie
-		puts "adding..."
+		puts ""
+		self.add_movie(arg)
 	end
 
 	def list
-		puts "linting..."
+		movies = Movie.get_all_movies
+		output_movie_table(movies)	
 	end
 
 	def find
@@ -60,11 +63,29 @@ class Interface
 	end
 
 	def welcome_msg
-		puts "\n\n<<< WELCOME TO THE MOVIE APP >>>\n\n"
+		puts "\n\n<<< WELCOME TO THE MOVIE APP >>>"
+		puts "\n\nUse add, list, find and sort to interact with this app\n\n"
 	end
 
 	def goodbye_msg
 		puts "\n\n<<< GoodBye! >>>\n\n"
 	end
 
+	private
+	def output_movie_table(movies = [])
+		print " " + "Movie Name".ljust(30)		
+		print " " + "Release Date".ljust(20)		
+		print " " + "Rating".rjust(6) + "\n"
+		puts "-"*60
+
+		movies.each do |movie|
+			line  = " " << movie.movie_name.ljust(30)
+			line << " " << movie.release_date.ljust(20)
+			line << " " << movie.rating.rjust(6)
+			puts line
+		end		
+
+		puts "No Restaurant Found" if movies.empty?
+		puts "-"*60
+	end
 end
