@@ -46,6 +46,15 @@ describe "Store" do
 		end
 	end
 
+	describe "should able get data from file" do
+		before { Store.set_file = 'movie.txt'}	
+		context "file data" do
+			it { Store.get_data_from_file.should be_kind_of(Array) }
+		end
+
+	end
+
+
 end 
 	
 

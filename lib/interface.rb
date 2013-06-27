@@ -1,12 +1,24 @@
+require 'store'
+
 class Interface
 
 	def initialize(path=nil)
-		
+		Store.set_file = path 
+		if Store.usable?
+			puts "Found your file"
+		elsif 
+			Store.create_file(path)
+			puts "File Created"
+		else
+			puts "File Error! Exiting...."
+			exit!
+		end
+
 	end
 
 	def launch!
 		welcome_msg
-		
+
 		result = nil
 		until result == :quit
 			action = user_action

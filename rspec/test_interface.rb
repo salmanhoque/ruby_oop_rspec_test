@@ -2,6 +2,8 @@ require File.expand_path('lib/interface.rb')
 
 describe "InterfaceClass"  do 
 
+  describe "launch method" do
+  
    	before :each do
    	 	@a = Interface.new("movie.txt") 
    	end
@@ -9,13 +11,12 @@ describe "InterfaceClass"  do
    	context "should have a method to launch the app" do
    		it { @a.should respond_to :launch! }
    	end
-
    	
-   	context "launch method should call welcome_msg" do
+   	context "should call welcome_msg" do
    		it { 
    			obj = double()
-			obj.stub(:msg => "\n\n<<< WELCOME TO THE MOVIE APP >>>\n\n" )
-			obj.stub(:msg).with(@a.welcome_msg)
+			  obj.stub(:msg => "\n\n<<< WELCOME TO THE MOVIE APP >>>\n\n" )
+        obj.stub(:msg).with(@a.welcome_msg)
    		}
    	end
    	
@@ -35,14 +36,6 @@ describe "InterfaceClass"  do
    		}
     end
 
-    context "if user input is listing" do
-   		it { 
-   			obj = double
-   			obj.stub(:list => "listing...")
-   			a = obj.stub(:list).with(@a.actions('list'))
-   		}
-    end
-
     context "if user input is finding" do
    		it { 
    			obj = double
@@ -50,6 +43,18 @@ describe "InterfaceClass"  do
    			a = obj.stub(:find).with(@a.actions('find'))
    		}
     end
+  end
 
+  describe "listing movies" do
+    before { @a = Interface.new("movie.txt") }
+
+    context "if user input is listing" do
+      it { 
+        obj = double
+        obj.stub(:list => "listing...")
+        a = obj.stub(:list).with(@a.actions('list'))
+      }
+    end
+  end
     
 end

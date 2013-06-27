@@ -37,4 +37,18 @@ class Store
 		end
 		return true
 	end
+
+	def self.get_data_from_file
+		return false unless self.usable?
+
+		data = []
+		file = File.new(@@file, 'r')	
+		file.each_line do |line|
+			movie = line.chomp.split("\t")
+			data << movie
+		end
+		file.close
+
+		return data
+	end
 end
