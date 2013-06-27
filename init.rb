@@ -6,6 +6,6 @@ $:.unshift(File.join(APP_ROOT, 'lib'))
 
 require 'interface'
 
-interface = Interface.new
+interface = Interface.new('movie.txt')
 
 interface.launch!

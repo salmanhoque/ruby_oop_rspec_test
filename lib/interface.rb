@@ -6,6 +6,7 @@ class Interface
 
 	def launch!
 		welcome_msg
+		
 		result = nil
 		until result == :quit
 			action = user_action
