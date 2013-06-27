@@ -22,8 +22,8 @@ class Interface
 
 		result = nil
 		until result == :quit
-			action = user_action
-			result = actions(action)
+			action, user_args = user_action
+			result = actions(action, user_args)
 		end			
 		
 		goodbye_msg
@@ -31,16 +31,17 @@ class Interface
 
 	def user_action
 		print "> " 
-		action = gets.chomp
-		return action
+		user_args = gets.chomp.downcase.split(' ')
+		action    = user_args.shift
+		return action, user_args
 	end
 
-	def actions(action=nil)
+	def actions(action, user_args)
 		case action
 		when 'add'
 			add_movie
 		when 'list'
-			list	
+			list(user_args)
 		when 'find'
 			find 
 		when 'quit'
@@ -65,13 +66,31 @@ class Interface
 		end
 	end
 
-	def list
-		movies = Movie.get_all_movies
+	def list(user_args)
+		movies       = Movie.get_all_movies
+		sort_order   = user_args.shift
+		sort_order   = user_args.shift if sort_order == 'by'
+		sort_order   = "name" unless ['name', 'date', 'rating'].include?(sort_order)
+
+		puts "\n\n Movie List \n\n"
+		puts "Try using list by name, list by rating or list by date"
+
+		movies.sort! do |m1,m2|
+			case sort_order
+			when 'name'
+				m1.movie_name.downcase <=> m2.movie_name.downcase
+			when 'date'
+				m1.release_date.to_i <=> m2.release_date.to_i
+			when 'rating'
+				m1.rating.to_i <=> m2.rating.to_i
+			end
+		end
+		
 		output_movie_table(movies)	
 	end
 
-	def find
-		puts "finding..."
+	def find(user_args) 
+		puts user_args
 	end
 
 	def welcome_msg
