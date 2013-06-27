@@ -49,8 +49,20 @@ class Interface
 	end
 
 	def add_movie
-		puts ""
-		self.add_movie(arg)
+		args = []
+
+		puts "Enter movie name:"
+		args << gets.chomp
+		puts "Enter movie release_date:"
+		args << gets.chomp
+		puts "Enter movie rating:"
+		args << gets.chomp
+
+		if Movie.add_movie(args) 
+			puts "Your movie has been added" 
+		else 
+			puts "File Error!"
+		end
 	end
 
 	def list
