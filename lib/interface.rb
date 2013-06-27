@@ -43,7 +43,7 @@ class Interface
 		when 'list'
 			list(user_args)
 		when 'find'
-			find 
+			find(user_args) 
 		when 'quit'
 			return :quit			
 		end
@@ -72,7 +72,7 @@ class Interface
 		sort_order   = user_args.shift if sort_order == 'by'
 		sort_order   = "name" unless ['name', 'date', 'rating'].include?(sort_order)
 
-		puts "\n\n Movie List \n\n"
+		puts "\nMovie List \n\n"
 		puts "Try using list by name, list by rating or list by date"
 
 		movies.sort! do |m1,m2|
@@ -82,7 +82,7 @@ class Interface
 			when 'date'
 				m1.release_date.to_i <=> m2.release_date.to_i
 			when 'rating'
-				m1.rating.to_i <=> m2.rating.to_i
+				m1.rating.to_f <=> m2.rating.to_f
 			end
 		end
 		
@@ -90,7 +90,14 @@ class Interface
 	end
 
 	def find(user_args) 
-		puts user_args
+		puts "\n\nTo find any movie type: find movie name\n\n"
+		keyward      = user_args.shift
+		movies       = Movie.get_all_movies
+		found        = movies.select do |movie|
+			movie.movie_name.downcase.include?(keyward.downcase) ||
+			movie.release_date.to_i == keyward.to_i 
+		end
+		output_movie_table(found)
 	end
 
 	def welcome_msg
